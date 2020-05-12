@@ -18,6 +18,7 @@ public class Cuenta {
     saldo = 0;
   }
 
+  //En el constructor se puede inicar tambien el array list vacio.
   public Cuenta(double montoInicial) {
     saldo = montoInicial;
   }
@@ -26,6 +27,7 @@ public class Cuenta {
     this.movimientos = movimientos;
   }
 
+  //El nombre del metodo deberia ser mas explicito respecto de su funcion. Tambien el nombre de las variables.
   public void poner(double cuanto) {
     if (cuanto <= 0) {
       throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
@@ -38,6 +40,7 @@ public class Cuenta {
     new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
   }
 
+  //En esta linea se observa codigo repetido, es el mismo que en el metodo poner(). El nombre del metodo y de sus variables deberia ser mas explicito respecto de su funcion.
   public void sacar(double cuanto) {
     if (cuanto <= 0) {
       throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
@@ -48,15 +51,16 @@ public class Cuenta {
     double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now());
     double limite = 1000 - montoExtraidoHoy;
     if (cuanto > limite) {
-      throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
+      throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000 //Este importe deberia ser variable
           + " diarios, límite: " + limite);
     }
     new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
   }
 
+  //En este caso se puede generar el new directamente adentro del add.
   public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
-    Movimiento movimiento = new Movimiento(fecha, cuanto, esDeposito);
-    movimientos.add(movimiento);
+    Movimiento movimiento= new Movimiento(fecha, cuanto, esDeposito);
+    movimientos.add(movimiento); // movimientos.add(movimiento = new Movimiento(fecha, cuanto, esDeposito));
   }
 
   public double getMontoExtraidoA(LocalDate fecha) {
